@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class Paciente {
     public int NSS;
     public String nombres;
@@ -18,5 +21,9 @@ public class Paciente {
     }
     public Paciente() {
         citas = new ListaLigada();
+    }
+    public void agregarCita(LocalDateTime fecha, String nombreMedico, int consultorio) {
+        Citas nuevaCita = new Citas(fecha, nombreMedico, consultorio);
+        citas.insertarOrdenado(nuevaCita);
     }
 }
