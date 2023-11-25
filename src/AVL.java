@@ -1,9 +1,10 @@
 public class AVL {
     public NodoAVL raiz;
-
+    
     public AVL() {
         this.raiz = null;
     }
+    
     //Casi no se nota que salio del ChatGPT xD
     // Método para obtener la altura de un nodo
     public int altura(NodoAVL nodo) {
@@ -99,7 +100,116 @@ public class AVL {
 
         return nodo;
     }
+    
+    public NodoAVL eliminar(NodoAVL nodo, int nss){
+        if (nodo == null) {
+        System.out.println("Elemento no encontrado");
+        return nodo;
+    }
 
+    // Buscar el nodo que contiene el dato
+    if (nss < nodo.paciente.NSS) {
+        nodo.izquierdo = eliminar(nodo.izquierdo, nss);
+    } else if (nss > nodo.paciente.NSS) {
+        nodo.derecho = eliminar(nodo.derecho, nss);
+    } else {
+        // Casos para eliminar el nodo
+        if (nodo.izquierdo == null) {
+            NodoAVL temp = nodo.derecho;
+            System.out.print("Elemento eliminado: " + nodo.paciente.NSS + " reemplazado por ");
+            if (temp != null) {
+                System.out.println(temp.paciente.NSS);
+            } else {
+                System.out.println("NULL");
+            }
+            nodo = null;
+            return temp;
+        } else if (nodo.derecho == null) {
+            NodoAVL temp = nodo.izquierdo;
+            System.out.print("Elemento eliminado: " + nodo.paciente.NSS + " reemplazado por ");
+            if (temp != null) {
+                System.out.println(temp.paciente.NSS);
+            } else {
+                System.out.println("NULL");
+            }
+            nodo = null;
+            return temp;
+        } else {
+            // Caso con dos hijos: encontrar el sucesor inmediato
+            NodoAVL temp = encontrarMinimo(nodo.derecho);
+            System.out.println("* Elemento eliminado: " + nodo.paciente.NSS + " reemplazado por " + temp.paciente.NSS);
+            nodo.paciente.NSS = temp.paciente.NSS;
+            nodo.derecho = eliminar(nodo.derecho, nss);
+        }
+    }
+    return nodo;
+    }
+    
+    public NodoAVL encontrarMinimo(NodoAVL nodo){
+        while (nodo.izquierdo != null) {
+            nodo = nodo.izquierdo;
+        }
+        return nodo;
+    }
+    
+    public boolean buscar(int nss){
+       return buscarRec(raiz, nss);
+    }
+    
+    public boolean buscarRec(NodoAVL nodo, int nss){
+        if (nodo == null) {
+        return false; 
+    }
+
+        if (nodo.paciente.NSS == nss) {
+        return true; 
+        } else if (nss < nodo.paciente.NSS) {
+            return buscarRec(nodo.izquierdo, nss); 
+    } else {
+        return buscarRec(nodo.derecho, nss); 
+    }
+    }
+    
+    public void mostrarInorden(NodoAVL nodo){
+        if (nodo != null) {
+            mostrarInorden(nodo.izquierdo);
+            System.out.println(nodo.paciente.NSS+ " ");
+            mostrarInorden(nodo.derecho);
+        }
+    }
+    
+    public void mostrarInorden(){
+        mostrarInorden(raiz);
+         System.out.println("\n");
+    }
+    
+     public void mostrarPreorden(NodoAVL nodo){
+         if (nodo != null) {
+        System.out.println(nodo.paciente.NSS+ " "); 
+        mostrarPreorden(nodo.izquierdo); 
+        mostrarPreorden(nodo.derecho);  
+    }
+     }
+     
+    public void mostrarPreorden(){
+        mostrarPreorden(raiz); 
+        System.out.println("\n");
+    }
+    
+    public void mostrarPostorden(NodoAVL nodo){
+        if (nodo != null) {
+        mostrarPostorden(nodo.izquierdo); 
+        mostrarPostorden(nodo.derecho); 
+        System.out.println(nodo.paciente.NSS+ " ");
+    }
+    }
+    
+    public void mostrarPostorden(){
+         mostrarPostorden(raiz);
+         System.out.println("\n");
+    }
+    
+    
     // Método público para insertar un paciente en el árbol AVL
     public void insertar(Paciente paciente) {
         raiz = insertar(raiz, paciente);
