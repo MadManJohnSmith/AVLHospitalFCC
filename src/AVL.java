@@ -151,23 +151,23 @@ public class AVL {
         }
         return nodo;
     }
-    
-    public boolean buscar(int nss){
-       return buscarRec(raiz, nss);
-    }
-    
-    public boolean buscarRec(NodoAVL nodo, int nss){
-        if (nodo == null) {
-        return false; 
+
+    public NodoAVL buscar(int nss) {
+        return buscarRec(raiz, nss);
     }
 
+    private NodoAVL buscarRec(NodoAVL nodo, int nss) {
+        if (nodo == null) {
+            return null;
+        }
+
         if (nodo.paciente.NSS == nss) {
-        return true; 
+            return nodo;
         } else if (nss < nodo.paciente.NSS) {
-            return buscarRec(nodo.izquierdo, nss); 
-    } else {
-        return buscarRec(nodo.derecho, nss); 
-    }
+            return buscarRec(nodo.izquierdo, nss);
+        } else {
+            return buscarRec(nodo.derecho, nss);
+        }
     }
     
     public void mostrarInorden(NodoAVL nodo){
@@ -215,5 +215,4 @@ public class AVL {
         raiz = insertar(raiz, paciente);
     }
 
-    // Otros métodos (eliminar, buscar, mostrar, etc.) se pueden agregar según sea necesario
 }

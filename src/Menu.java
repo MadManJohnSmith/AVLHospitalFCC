@@ -1,27 +1,141 @@
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
+
 public class Menu {
     boolean seguro=false;
+    Scanner scanner = new Scanner(System.in);
     AVL arbolPrincipal = new AVL();
     public void insertarPaciente(){
-        Paciente nuevoPaciente = new Paciente();
+        System.out.println("\t\tAsignación de Cuenta");
+        System.out.println("\tIngresa los datos del paciente\n");
+
+        System.out.println("NSS: ");
+        int nss = scanner.nextInt();
+        System.out.println("Nombre(s): ");
+        String nom = scanner.next();
+        System.out.println("Apellido Paterno: ");
+        String apellidoPat = scanner.next();
+        System.out.println("Apellido Materno: ");
+        String apellidoMat = scanner.next();
+        System.out.println("Sexo(M ó F): ");
+        char sex = scanner.next().charAt(0);
+        System.out.println("Edad: ");
+        int ed = scanner.nextInt();
+
+        Paciente nuevoPaciente = new Paciente(nss, nom, apellidoPat, apellidoMat, sex, ed);
         arbolPrincipal.insertar(nuevoPaciente);
     }
     public void insertarCita(){
+        System.out.println("\t\tAsignación de Cita");
+        System.out.println("\tIngresa los datos del paciente\n");
+
+        System.out.println("NSS: ");
+        int nss = scanner.nextInt();
+        Paciente paciente = obtenerPaciente(nss);
+        if(paciente==null){
+            return;
+        }
+        System.out.println("Elige la cita que quieres modificar");
+        paciente.citas.mostrarLista();
+
+        System.out.println("Año(AAAA): ");
+        String an = scanner.next();
+        System.out.println("Mes(MM): ");
+        String me = scanner.next();
+        System.out.println("Dia(DD): ");
+        String di = scanner.next();
+        System.out.println("Hora(HHmm): ");
+        String ho = scanner.next();
+        LocalDateTime fecha = LocalDateTime.parse(an+me+di+ho);
+        System.out.println("Nombre del médico: ");
+        String nombreMedico = scanner.next();
+        System.out.println("Consultorio: ");
+        int consultorio = scanner.nextInt();
 
     }
     public void modificarPaciente(){
+        System.out.println("\t\tModificar Datos");
+        System.out.println("\tIngresa los datos del paciente\n");
 
+        System.out.println("NSS: ");
+        int nss = scanner.nextInt();
+        Paciente paciente = obtenerPaciente(nss);
+        if(paciente==null){
+            return;
+        }
+
+        System.out.println("¿Que dato desea modificar?");
+        System.out.println("""
+                1. Nombre
+                2. Apellido Paterno
+                3. Apellido Materno
+                4. Sexo
+                5. Edad
+                
+                0. Cancelar
+                """);
+        int opcion = scanner.nextInt();
+        switch (opcion){
+            case 1:
+                System.out.println("Nombre(s): ");
+                paciente.nombres = scanner.next();
+                break;
+            case 2:
+                System.out.println("Apellido Paterno: ");
+                paciente.apellidoPaterno = scanner.next();
+                break;
+            case 3:
+                System.out.println("Apellido Materno: ");
+                paciente.apellidoMaterno = scanner.next();
+                break;
+            case 4:
+                System.out.println("Sexo(M ó F): ");
+                paciente.sexo = scanner.next().charAt(0);
+                break;
+            case 5:
+                System.out.println("Edad: ");
+                paciente.edad = scanner.nextInt();
+                break;
+            case 0:
+                return;
+            default:
+                System.out.println("Opcion invalida!");
+                break;
+        }
+        System.out.println("Datos del paciente modificados con éxito");
     }
     public void modificarCita(){
+        System.out.println("\t\tModificar Cita");
+        System.out.println("\tIngresa los datos del paciente\n");
+
+        System.out.println("NSS: ");
+        int nss = scanner.nextInt();
+        Paciente paciente = obtenerPaciente(nss);
+        if(paciente==null){
+            return;
+        }
+
 
     }
     public void buscar(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Escriba el NSS del paciente que quiere buscar");
         int nss = scanner.nextInt();
-        arbolPrincipal.buscar(nss);
+        NodoAVL nodoPaciente = arbolPrincipal.buscar(nss);
+        if(nodoPaciente == null){
+            System.out.println("Paciente no encontrado\nVerifique su entrada");
+        } else{
+            Paciente paciente = nodoPaciente.paciente;
+            paciente.mostrar();
+        }
+    }
+    private Paciente obtenerPaciente(int nss) {
+        NodoAVL nodoPaciente = arbolPrincipal.buscar(nss);
+        if(nodoPaciente==null){
+            System.out.println("Paciente no encontrado\nVerifique su entrada");
+            return null;
+        }
+        return nodoPaciente.paciente;
     }
     public void mostrarPreorden(){
         arbolPrincipal.mostrarPreorden();
@@ -37,14 +151,14 @@ public class Menu {
     }
     public void eliminar(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("De el NSS del paciente que quiere eliminar");
+        System.out.println("Escriba el NSS del paciente que quiere eliminar");
         int nss = scanner.nextInt();
         arbolPrincipal.eliminar(arbolPrincipal.raiz,nss);
     }
     public void salir(){
 
     }
-    public void modoPrueba(){
+    public void datosPrueba(){
         if(!seguro) {
             System.out.println("\tMODO DE PRUEBA");
             System.out.println("Bienvenido de vuelta!");
@@ -103,5 +217,78 @@ public class Menu {
 
             seguro = true;
         }
+    }
+
+    public void mostrar(){
+
+        int opcion;
+        do{
+            System.out.println("\tMENU PRINCIPAL");
+            System.out.println("""
+                1. Insertar"
+                2. Modificar
+                3. Buscar
+                4. Mostrar en Preorden
+                5. Mostrar en Inorden
+                6. Mostrar en Postorden
+                7. Exportar
+                8. Eliminar
+                9. Salir
+                """);
+            opcion = scanner.nextInt();
+
+            switch (opcion) {
+                case 1:
+                    System.out.println("a) Insertar Paciente \nb)Insertar Cita");
+                    char o = scanner.next().charAt(0);
+                    if(o == 'a'){
+                        insertarPaciente();
+                    }else if(o=='b'){
+                        insertarCita();
+                    }
+                    break;
+                case 2:
+                    System.out.println("a) Modificar Paciente \nb)Modificar Cita");
+                    char op= scanner.next().charAt(0);
+                    if(op == 'a'){
+                        modificarPaciente();
+                    }else if(op=='b'){
+                        modificarCita();
+                    }
+                    break;
+                case 3://buscr
+
+                    buscar();
+                    break;
+                case 4:
+                    System.out.println("Mostrando en Preorden");
+                    arbolPrincipal.mostrarPreorden();
+                    break;
+                case 5:
+                    System.out.println("Mostrar en Inorden");
+                    arbolPrincipal.mostrarInorden();
+                    break;
+                case 6:
+                    System.out.println("Mostrar en Postorden");
+                    arbolPrincipal.mostrarPostorden();
+                    break;
+                case 7://exportar
+
+                    break;
+                case 8://eliminar
+
+                    break;
+                case 9://salir
+                    System.out.println("¿Desas exportar los datos antes de salir?");
+
+
+
+                    salir();
+                    break;
+                default:
+                    System.out.println("Opción no válida. Intente de nuevo.");
+            }
+
+        } while (opcion != 8);
     }
 }
