@@ -6,6 +6,8 @@ public class NodoAVL {
 
     public NodoAVL(Paciente paciente) {
         this.paciente = paciente;
+        this.izquierdo = null;
+        this.derecho = null;
         this.altura = 1;
     }
 }
