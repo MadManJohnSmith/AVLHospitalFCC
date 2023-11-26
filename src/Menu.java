@@ -1,15 +1,20 @@
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import java.util.Scanner;
 public class Menu {
-    boolean seguro=false;
     AVL arbolPrincipal = new AVL();
     public void insertarPaciente(){
         Paciente nuevoPaciente = new Paciente();
         arbolPrincipal.insertar(nuevoPaciente);
     }
     public void insertarCita(){
-
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("De el NSS del paciente que quiere buscar");
+        int nss = scanner.nextInt();
+        boolean ext = true;
+        ext = arbolPrincipal.buscar(nss);
+        if(ext=true){
+            
+        }
     }
     public void modificarPaciente(){
 
@@ -19,7 +24,7 @@ public class Menu {
     }
     public void buscar(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Escriba el NSS del paciente que quiere buscar");
+        System.out.println("De el NSS del paciente que quiere buscar");
         int nss = scanner.nextInt();
         arbolPrincipal.buscar(nss);
     }
@@ -45,63 +50,85 @@ public class Menu {
 
     }
     public void modoPrueba(){
-        if(!seguro) {
+        Scanner scanner = new Scanner(System.in);
+        int opcion;
+        int ns =0;
+        String nom;
+        String apellidoPat;
+        String apellidoMat;
+        char sex;
+        int ed;
+        
+        do {
             System.out.println("\tMODO DE PRUEBA");
-            System.out.println("Bienvenido de vuelta!");
-            Paciente test1 = new Paciente(99092013, "Karla", "Ramírez",
-                    "Palacios", 'F', 21);
-            test1.agregarCita(LocalDateTime.of(2017, 10, 20, 8, 0),
-                    "Juárez", 1);
-            test1.agregarCita(LocalDateTime.of(2017, 10, 22, 10, 0),
-                    "García", 11);
-            test1.agregarCita(LocalDateTime.of(2017, 10, 23, 16, 0),
-                    "Cárdenas", 2);
+            System.out.println("1. Insertar");
+            System.out.println("2. Modificar");
+            System.out.println("3. Buscar");
+            System.out.println("4.Mostrar en Preorden");
+            System.out.println("5.Mostrar en Inorden\n");
+            System.out.println("6.Mostrar en Postorden\n");
+            System.out.println("7.Exportar\n");
+            System.out.println("8.Eliminar\n");
+            System.out.println("8.Salir\n");
+            opcion = scanner.nextInt();
 
-            Paciente test2 = new Paciente(31051985, "José", "Hernández",
-                    "Meza", 'M', 41);
-            test2.agregarCita(LocalDateTime.of(2017, 11, 20, 8, 0),
-                    "Zarate", 20);
-            test2.agregarCita(LocalDateTime.of(2017, 11, 21, 9, 0),
-                    "Corona", 6);
-            test2.agregarCita(LocalDateTime.of(2017, 11, 22, 8, 0),
-                    "Zarate", 20);
-            test2.agregarCita(LocalDateTime.of(2017, 11, 23, 9, 0),
-                    "Corona", 6);
-            test2.agregarCita(LocalDateTime.of(2017, 11, 24, 8, 0),
-                    "Zarate", 20);
+            switch (opcion) {
+                case 1:
+                    int o = 0;
+                    System.out.println(" (1).Para insertar paciente y (2).Para agregar cita");
+                    o = scanner.nextInt();
+                    if(o == 1){
+                        System.out.println("Inserte el NSS del paciente");
+                        ns = scanner.nextInt();
+                        System.out.println("Inserte el nombre del paciente");
+                        nom = scanner.next();
+                        System.out.println("Inserte el apellido paterno");
+                        apellidoPat = scanner.next();
+                        System.out.println("Inserte el apellido materno");
+                        apellidoMat = scanner.next();
+                        System.out.println("Inserte el sexo");
+                        sex = scanner.next().charAt(0);
+                        System.out.println("Inserte la edad");
+                        ed = scanner.nextInt();
+                        Paciente nuevoPaciente = new Paciente(ns,nom,apellidoPat,apellidoMat,sex,ed);
+                        arbolPrincipal.insertar(nuevoPaciente);
+                    }else{
 
-            Paciente test3 = new Paciente(15092017, "Luis", "Robles",
-                    "Anzurez", 'M', 56);
-            test3.agregarCita(LocalDateTime.of(2017, 6, 20, 10, 0),
-                    "Pérez", 21);
-            test3.agregarCita(LocalDateTime.of(2017, 7, 21, 7, 0),
-                    "Tzonpantzi", 10);
-            test3.agregarCita(LocalDateTime.of(2017, 8, 22, 9, 0),
-                    "Pérez", 21);
-            test3.agregarCita(LocalDateTime.of(2017, 9, 23, 7, 0),
-                    "Andrade", 3);
+                    }
+           
+                    break;
+                case 2:
+                    
+                    break;
+                case 3:
+                    System.out.println("Saliendo del modo de prueba...");
+                    break;
+                case 4:
+                    System.out.println("Mostrando en preorden");
+                    arbolPrincipal.mostrarPreorden();
+                    break;
+                case 5:
+                    System.out.println("Mostrar en inorden");
+                    arbolPrincipal.mostrarInorden();
+                    break;
+                case 6:
+                    System.out.println("Mostrar en Postorden");
+                    arbolPrincipal.mostrarPostorden();
+                    break;
+                case 7:
+                    System.out.println("Saliendo del modo de prueba...");
+                    break;
+                case 8:
+                    System.out.println("Saliendo del modo de prueba...");
+                    break;
+                case 9:
+                    System.out.println("Saliendo del modo de prueba...");
+                    break;
+                default:
+                    System.out.println("Opción no válida. Intente de nuevo.");
+            }
 
-            Paciente test4 = new Paciente(16091989, "Tania", "Romero",
-                    "Cuamatzi", 'F', 23);
-            test4.agregarCita(LocalDateTime.of(2017, 12, 7, 8, 0),
-                    "Juárez", 1);
-            test4.agregarCita(LocalDateTime.of(2017, 12, 22, 9, 0),
-                    "Tzonpantzi", 10);
-            test4.agregarCita(LocalDateTime.of(2018, 1, 23, 8, 0),
-                    "Juárez", 1);
+        } while (opcion != 3);
 
-            Paciente test5 = new Paciente(16062017, "Diana", "Gómez",
-                    "Arroyo", 'F', 18);
-            test5.agregarCita(LocalDateTime.of(2017, 12, 20, 7, 0),
-                    "Zarate", 20);
-            test5.agregarCita(LocalDateTime.of(2018, 1, 21, 17, 0),
-                    "Corona", 6);
-            test5.agregarCita(LocalDateTime.of(2018, 2, 22, 14, 0),
-                    "Corona", 6);
-            test5.agregarCita(LocalDateTime.of(2018, 3, 23, 9, 0),
-                    "Zarate", 20);
-
-            seguro = true;
-        }
     }
 }
