@@ -76,12 +76,12 @@ public class AVL {
         // Obtener el factor de equilibrio del nodo y realizar las rotaciones necesarias
         int equilibrio = factorEquilibrio(nodo);
 
-        // Caso izquierda-izquierda
+        // Rotación hacia la derecha
         if (equilibrio > 1 && paciente.NSS < nodo.izquierdo.paciente.NSS) {
             return rotarDerecha(nodo);
         }
 
-        // Caso derecha-derecha
+        // Rotación hacia la izquierda
         if (equilibrio < -1 && paciente.NSS > nodo.derecho.paciente.NSS) {
             return rotarIzquierda(nodo);
         }
