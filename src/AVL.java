@@ -215,4 +215,24 @@ public class AVL {
         raiz = insertar(raiz, paciente);
     }
 
+        public void exportarAVL(String nombreArchivo) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(nombreArchivo))) {
+            exportarInorden(raiz, writer);
+            System.out.println("Datos del AVL exportados correctamente en " + nombreArchivo);
+        } catch (IOException e) {
+            System.err.println("Error al escribir en el archivo: " + e.getMessage());
+        }
+    }
+
+    private void exportarInorden(NodoAVL nodo, PrintWriter writer) {
+    if (nodo != null) {
+        exportarInorden(nodo.izquierdo, writer);
+        // Aquí puedes personalizar cómo se escriben los datos en el archivo
+        System.out.println("Exportando: " + nodo.paciente.toString()); // Mensaje de depuración
+        writer.println(nodo.paciente.toString());
+        exportarInorden(nodo.derecho, writer);
+    }
+}
+
+
 }
