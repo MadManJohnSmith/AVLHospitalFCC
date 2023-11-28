@@ -173,7 +173,7 @@ public class AVL {
     public void mostrarInorden(NodoAVL nodo){
         if (nodo != null) {
             mostrarInorden(nodo.izquierdo);
-            System.out.println(nodo.paciente.NSS+ " ");
+            nodo.paciente.mostrar();
             mostrarInorden(nodo.derecho);
         }
     }
@@ -185,7 +185,7 @@ public class AVL {
     
      public void mostrarPreorden(NodoAVL nodo){
          if (nodo != null) {
-        System.out.println(nodo.paciente.NSS+ " "); 
+        nodo.paciente.mostrar(); 
         mostrarPreorden(nodo.izquierdo); 
         mostrarPreorden(nodo.derecho);  
     }
@@ -200,7 +200,7 @@ public class AVL {
         if (nodo != null) {
         mostrarPostorden(nodo.izquierdo); 
         mostrarPostorden(nodo.derecho); 
-        System.out.println(nodo.paciente.NSS+ " ");
+        nodo.paciente.mostrar();
     }
     }
     
