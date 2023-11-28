@@ -6,6 +6,7 @@ public class Menu {
     boolean seguro=false;
     Scanner scanner = new Scanner(System.in);
     AVL arbolPrincipal = new AVL();
+    private Object avl;
     public void insertarPaciente(){
         System.out.println("\t\tAsignación de Cuenta");
         System.out.println("\tIngresa los datos del paciente\n");
@@ -92,31 +93,39 @@ public class Menu {
                 """);
         int opcion = scanner.nextInt();
         switch (opcion){
-            case 1:
+            case 1 -> {
                 System.out.println("Nombre(s): ");
                 paciente.nombres = scanner.next();
-                break;
-            case 2:
+            }
+            case 2 -> {
                 System.out.println("Apellido Paterno: ");
                 paciente.apellidoPaterno = scanner.next();
-                break;
-            case 3:
+            }
+            case 3 -> {
                 System.out.println("Apellido Materno: ");
                 paciente.apellidoMaterno = scanner.next();
-                break;
-            case 4:
+            }
+            case 4 -> {
                 System.out.println("Sexo(M ó F): ");
                 paciente.sexo = scanner.next().charAt(0);
-                break;
-            case 5:
+            }
+            case 5 -> {
                 System.out.println("Edad: ");
                 paciente.edad = scanner.nextInt();
-                break;
-            case 0:
+            }
+                case 7 -> {
+                    AVL miAVL = new AVL();
+                    
+                    System.out.println("Exportando datos del AVL a un archivo...");
+                    System.out.println("Ingrese el nombre del archivo (.txt): ");
+                    String nombreArchivo = scanner.next();
+                    miAVL.exportarAVL(nombreArchivo);
+            }
+
+            case 0 -> {
                 return;
-            default:
-                System.out.println("Opcion invalida!");
-                break;
+            }
+            default -> System.out.println("Opcion invalida!");
         }
         System.out.println("Datos del paciente modificados con éxito");
     }
@@ -221,9 +230,11 @@ public class Menu {
         int nss = scanner.nextInt();
         arbolPrincipal.eliminar(arbolPrincipal.raiz,nss);
     }
-    public void salir(){
+    public void salir() {
+    System.out.println("Saliendo");
+    System.exit(0);
+}
 
-    }
     public void datosPrueba(){
         if(!seguro) {
             System.out.println("\tMODO DE PRUEBA");
@@ -304,7 +315,7 @@ public class Menu {
             opcion = scanner.nextInt();
 
             switch (opcion) {
-                case 1:
+                case 1 -> {
                     System.out.println("a) Insertar Paciente \nb)Insertar Cita");
                     char o = scanner.next().charAt(0);
                     if(o == 'a'){
@@ -312,8 +323,8 @@ public class Menu {
                     }else if(o=='b'){
                         insertarCita();
                     }
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     System.out.println("a) Modificar Paciente \nb)Modificar Cita");
                     char op= scanner.next().charAt(0);
                     if(op == 'a'){
@@ -321,38 +332,44 @@ public class Menu {
                     }else if(op=='b'){
                         modificarCita();
                     }
-                    break;
-                case 3://buscr
+                }
+                case 3 -> 
 
                     buscar();
-                    break;
-                case 4:
+                case 4 -> {
                     System.out.println("Mostrando en Preorden");
                     arbolPrincipal.mostrarPreorden();
-                    break;
-                case 5:
+                }
+                case 5 -> {
                     System.out.println("Mostrar en Inorden");
                     arbolPrincipal.mostrarInorden();
-                    break;
-                case 6:
+                }
+                case 6 -> {
                     System.out.println("Mostrar en Postorden");
                     arbolPrincipal.mostrarPostorden();
-                    break;
-                case 7://exportar
+                }
+              case 7 -> {
+                    if (arbolPrincipal.raiz == null) {
+                        System.out.println("El árbol AVL está vacío. No hay datos para exportar.");
+                    } else {
+                        System.out.println("Exportando datos del AVL a un archivo...");
+                        System.out.println("Ingrese el nombre del archivo (.txt): ");
+                        String nombreArchivo = scanner.next();
+                        arbolPrincipal.exportarAVL(nombreArchivo);
+                    }
+}
 
-                    break;
-                case 8://eliminar
 
-                    break;
-                case 9://salir
+                case 8 -> {
+                    eliminar();
+                }
+                case 9 -> {
+                    //salir
                     System.out.println("¿Desas exportar los datos antes de salir?");
-
-
-
+                    
                     salir();
-                    break;
-                default:
-                    System.out.println("Opción no válida. Intente de nuevo.");
+                }
+                default -> System.out.println("Opción no válida. Intente de nuevo.");
             }
 
         } while (opcion != 8);
