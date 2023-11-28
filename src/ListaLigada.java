@@ -71,9 +71,56 @@ public class ListaLigada {
         else{
             aux=raiz;
             while(aux!=null){
-                System.out.println(aux.elemento + " ");
+                //System.out.println(aux.elemento + " ");
+                aux.elemento.mostrarCita();
                 aux=aux.siguiente;
             }
         }
+    }
+    
+    public Citas obtenerCitaPorIndice(int indice) {
+        NodoLista aux = raiz;
+        int contador = 1;
+
+        while (aux != null) {
+            if (contador == indice) {
+                return aux.elemento;
+            }
+
+            aux = aux.siguiente;
+            contador++;
+        }
+
+        return null; // Retorna null si el índice no es válido
+    }
+    
+     public void modificarCitaPorIndice(int indice, Citas nuevaCita) {
+        NodoLista aux = raiz;
+        int contador = 1;
+
+        while (aux != null) {
+            if (contador == indice) {
+                aux.elemento = nuevaCita; // Modificar la cita en el nodo actual
+                return;
+            }
+
+            aux = aux.siguiente;
+            contador++;
+        }
+
+        // Si llegamos aquí, el índice no es válido
+        System.out.println("Índice de cita no válido. La cita no ha sido modificada.");
+    }
+     
+     public int obtenerTamano() {
+        NodoLista aux = raiz;
+        int contador = 0;
+
+        while (aux != null) {
+            contador++;
+            aux = aux.siguiente;
+        }
+
+        return contador;
     }
 }
