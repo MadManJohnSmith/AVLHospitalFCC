@@ -5,7 +5,7 @@ public class AVL {
         this.raiz = null;
     }
     
-    //Casi no se nota que salio del ChatGPT xD
+    
     // Método para obtener la altura de un nodo
     public int altura(NodoAVL nodo) {
         if (nodo == null) {
