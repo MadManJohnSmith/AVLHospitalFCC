@@ -1,3 +1,11 @@
+/**
+ *      @author
+ *      Guillermo Sanchez Ortega
+ *      Joe David González Herrera
+ *      Grabiel Ramirez Bañuelos
+ *      Alan Salas Parada
+ */
+
 import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.time.format.DateTimeFormatter;
@@ -6,22 +14,23 @@ public class Menu {
     boolean seguro=false;
     Scanner scanner = new Scanner(System.in);
     AVL arbolPrincipal = new AVL();
+    //private Object avl;
     public void insertarPaciente(){
         System.out.println("\t\tAsignación de Cuenta");
         System.out.println("\tIngresa los datos del paciente\n");
 
-        System.out.println("NSS: ");
-        int nss = scanner.nextInt();
-        System.out.println("Nombre(s): ");
-        String nom = scanner.next();
-        System.out.println("Apellido Paterno: ");
-        String apellidoPat = scanner.next();
-        System.out.println("Apellido Materno: ");
-        String apellidoMat = scanner.next();
-        System.out.println("Sexo(M ó F): ");
-        char sex = scanner.next().charAt(0);
-        System.out.println("Edad: ");
-        int ed = scanner.nextInt();
+        System.out.print("NSS: ");
+        int nss = scanner.nextInt();            System.out.println();
+        System.out.print("Nombre(s): ");
+        String nom = scanner.next();            System.out.println();
+        System.out.print("Apellido Paterno: ");
+        String apellidoPat = scanner.next();    System.out.println();
+        System.out.print("Apellido Materno: ");
+        String apellidoMat = scanner.next();    System.out.println();
+        System.out.print("Sexo(M ó F): ");
+        char sex = scanner.next().charAt(0);    System.out.println();
+        System.out.print("Edad: ");
+        int ed = scanner.nextInt();             System.out.println();
 
         Paciente nuevoPaciente = new Paciente(nss, nom, apellidoPat, apellidoMat, sex, ed);
         arbolPrincipal.insertar(nuevoPaciente);
@@ -30,164 +39,170 @@ public class Menu {
         System.out.println("\t\tAsignación de Cita");
         System.out.println("\tIngresa los datos del paciente\n");
 
-        System.out.println("NSS: ");
-        int nss = scanner.nextInt();
+        System.out.print("NSS: ");
+        int nss = scanner.nextInt();   System.out.println();
         Paciente paciente = obtenerPaciente(nss);
-      
+
         if(paciente==null){
             return;
         }
-        System.out.println("Citas");
-        paciente.citas.mostrarLista();
+        System.out.println("\tCitas: ");
+        paciente.citas.mostrarLista();      System.out.println();
 
-        System.out.println("Año(AAAA): ");
-        String an = scanner.next();
-        System.out.println("Mes(MM): ");
-        String me = scanner.next();
-        System.out.println("Dia(DD): ");
-        String di = scanner.next();
-        System.out.println("Hora(HHmm): ");
-        String ho = scanner.next();
-        System.out.println("Minuto ");
-        String mi = scanner.next();
-        
-         // Concatenar las partes de la fecha y hora con un separador
+        System.out.print("Año(AAAA): ");
+        String an = scanner.next();         System.out.println();
+        System.out.print("Mes(MM): ");
+        String me = scanner.next();         System.out.println();
+        System.out.print("Dia(DD): ");
+        String di = scanner.next();         System.out.println();
+        System.out.print("Hora(HHmm): ");
+        String ho = scanner.next();         System.out.println();
+        System.out.print("Minuto: ");
+        String mi = scanner.next();         System.out.println();
+
+        // Concatenar las partes de la fecha y hora con un separador
         String fechaHoraTexto = an + "-" + me + "-" + di + "T" + ho + ":" + mi;
 
         // Utilizar un formateador de fecha y hora
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime fecha = LocalDateTime.parse(fechaHoraTexto, formatter);
-        
+
         // Concatenar las partes de la fecha y hora con un separador
-        System.out.println("Nombre del médico: ");
-        String nombreMedico = scanner.next();
-        System.out.println("Consultorio: ");
-        int consultorio = scanner.nextInt();
-        
+        System.out.print("Nombre del médico: ");
+        String nombreMedico = scanner.next();   System.out.println();
+        System.out.print("Consultorio: ");
+        int consultorio = scanner.nextInt();    System.out.println();
+
         Citas nuevaCita = new Citas(fecha, nombreMedico, consultorio);
         paciente.agregarCita(nuevaCita);
-        
-       
     }
     public void modificarPaciente(){
         System.out.println("\t\tModificar Datos");
         System.out.println("\tIngresa los datos del paciente\n");
 
-        System.out.println("NSS: ");
-        int nss = scanner.nextInt();
+        System.out.print("NSS: ");
+        int nss = scanner.nextInt();    System.out.println();
         Paciente paciente = obtenerPaciente(nss);
         if(paciente==null){
             return;
         }
-
-        System.out.println("¿Que dato desea modificar?");
+        System.out.println();
         System.out.println("""
-                1. Nombre
-                2. Apellido Paterno
-                3. Apellido Materno
-                4. Sexo
-                5. Edad
+                ¿Que dato desea modificar?
+                \t1. Nombre
+                \t2. Apellido Paterno
+                \t3. Apellido Materno
+                \t4. Sexo
+                \t5. Edad
                 
-                0. Cancelar
+                \t0. Cancelar
                 """);
         int opcion = scanner.nextInt();
         switch (opcion){
-            case 1:
-                System.out.println("Nombre(s): ");
-                paciente.nombres = scanner.next();
-                break;
-            case 2:
-                System.out.println("Apellido Paterno: ");
-                paciente.apellidoPaterno = scanner.next();
-                break;
-            case 3:
-                System.out.println("Apellido Materno: ");
-                paciente.apellidoMaterno = scanner.next();
-                break;
-            case 4:
-                System.out.println("Sexo(M ó F): ");
-                paciente.sexo = scanner.next().charAt(0);
-                break;
-            case 5:
-                System.out.println("Edad: ");
-                paciente.edad = scanner.nextInt();
-                break;
-                
-            case 0:
+            case 1 -> {
+                System.out.print("Nombre(s): ");
+                paciente.nombres = scanner.next();System.out.println();
+            }
+            case 2 -> {
+                System.out.print("Apellido Paterno: ");
+                paciente.apellidoPaterno = scanner.next();System.out.println();
+            }
+            case 3 -> {
+                System.out.print("Apellido Materno: ");
+                paciente.apellidoMaterno = scanner.next();System.out.println();
+            }
+            case 4 -> {
+                System.out.print("Sexo(M ó F): ");
+                paciente.sexo = scanner.next().charAt(0);System.out.println();
+            }
+            case 5 -> {
+                System.out.print("Edad: ");
+                paciente.edad = scanner.nextInt();System.out.println();
+            }
+            case 7 -> {
+                AVL miAVL = new AVL();
+
+                System.out.println("Exportando datos del AVL a un archivo...");
+                System.out.print("Ingrese el nombre del archivo: ");
+                String nombreArchivo = scanner.next();System.out.println();
+                miAVL.exportarAVL(nombreArchivo+".txt");
+            }
+            case 0 -> {
                 return;
-            default:
-                System.out.println("Opcion invalida!");
-                break;
+            }
+            default -> System.out.println("Opcion invalida!");
         }
         System.out.println("Datos del paciente modificados con éxito");
     }
     public void modificarCita(){
-       System.out.println("\t\tModificar Cita");
-       System.out.println("\tIngresa los datos del paciente\n");
+        System.out.println("\t\tModificar Cita");
+        System.out.println("\tIngresa los datos del paciente\n");
 
-    System.out.println("NSS: ");
-    int nss = scanner.nextInt();
-    Paciente paciente = obtenerPaciente(nss);
-    if (paciente == null) {
-        return;
-    }
+        System.out.print("NSS: ");
+        int nss = scanner.nextInt();System.out.println();
+        Paciente paciente = obtenerPaciente(nss);
+        if (paciente == null) {
+            return;
+        }
 
-    System.out.println("Elige la cita que quieres modificar");
-    paciente.citas.mostrarLista();
+        System.out.println("\tElige la cita que quieres modificar");
+        paciente.citas.mostrarLista();
 
-    System.out.println("Ingrese el índice de la cita que desea modificar: ");
-    int indiceCitaModificar = scanner.nextInt();
+        System.out.println("Ingrese el índice de la cita que desea modificar: ");
+        int indiceCitaModificar = scanner.nextInt();
 
-    if (indiceCitaModificar < 1 || indiceCitaModificar > paciente.citas.obtenerTamano()) {
-        System.out.println("Índice de cita no válido. Operación cancelada.");
-        return;
-    }
+        if (indiceCitaModificar < 1 || indiceCitaModificar > paciente.citas.obtenerTamano()) {
+            System.out.println("Índice de cita no válido. Operación cancelada.");
+            return;
+        }
 
-    // Obtener la cita seleccionada
-    Citas citaSeleccionada = paciente.citas.obtenerCitaPorIndice(indiceCitaModificar);
+        // Obtener la cita seleccionada
+        Citas citaSeleccionada = paciente.citas.obtenerCitaPorIndice(indiceCitaModificar);
 
-    // Mostrar detalles de la cita seleccionada
-    System.out.println("Detalles de la cita seleccionada:");
-    citaSeleccionada.mostrarCita();
+        // Mostrar detalles de la cita seleccionada
+        System.out.println("Detalles de la cita seleccionada:");
+        citaSeleccionada.mostrarCita();
 
-    // Pedir al usuario que ingrese los nuevos datos
-    System.out.println("Ingrese los nuevos datos para la cita:");
+        // Pedir al usuario que ingrese los nuevos datos
+        System.out.println();
+        System.out.println("Ingrese los nuevos datos para la cita:");
 
-    System.out.println("Año(AAAA): ");
-    String an = scanner.next();
-    System.out.println("Mes(MM): ");
-    String me = scanner.next();
-    System.out.println("Dia(DD): ");
-    String di = scanner.next();
-    System.out.println("Hora(HH): ");
-    String ho = scanner.next();
-    System.out.println("Minuto(MM): ");
-    String mi = scanner.next();
+        System.out.print("Año(AAAA): ");
+        String an = scanner.next();System.out.println();
+        System.out.print("Mes(MM): ");
+        String me = scanner.next();System.out.println();
+        System.out.print("Dia(DD): ");
+        String di = scanner.next();System.out.println();
+        System.out.print("Hora(HH): ");
+        String ho = scanner.next();System.out.println();
+        System.out.print("Minuto(MM): ");
+        String mi = scanner.next();System.out.println();
 
-    // Concatenar las partes de la fecha y hora con un separador
-    String fechaHoraTexto = an + "-" + me + "-" + di + "T" + ho + ":" + mi;
+        // Concatenar las partes de la fecha y hora con un separador
+        String fechaHoraTexto = an + "-" + me + "-" + di + "T" + ho + ":" + mi;
 
-    // Utilizar un formateador de fecha y hora
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-    LocalDateTime nuevaFecha = LocalDateTime.parse(fechaHoraTexto, formatter);
+        // Utilizar un formateador de fecha y hora
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        LocalDateTime nuevaFecha = LocalDateTime.parse(fechaHoraTexto, formatter);
 
-    System.out.println("Nombre del médico: ");
-    String nuevoNombreMedico = scanner.next();
-    System.out.println("Consultorio: ");
-    int nuevoConsultorio = scanner.nextInt();
+        System.out.print("Nombre del médico: ");
+        String nuevoNombreMedico = scanner.next();System.out.println();
+        System.out.print("Consultorio: ");
+        int nuevoConsultorio = scanner.nextInt();System.out.println();
 
-    // Crear una nueva cita con los datos actualizados
-    Citas nuevaCita = new Citas(nuevaFecha, nuevoNombreMedico, nuevoConsultorio);
+        // Crear una nueva cita con los datos actualizados
+        Citas nuevaCita = new Citas(nuevaFecha, nuevoNombreMedico, nuevoConsultorio);
 
-    // Modificar la cita en la lista
-    paciente.citas.modificarCitaPorIndice(indiceCitaModificar, nuevaCita);
+        // Modificar la cita en la lista
+        paciente.citas.modificarCitaPorIndice(indiceCitaModificar, nuevaCita);
 
-    System.out.println("Cita modificada con éxito.");
+        System.out.println("\tCita modificada con éxito.");
     }
     public void buscar(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Escriba el NSS del paciente que quiere buscar");
-        int nss = scanner.nextInt();
+        System.out.println("\t\tBuscar Paciente");
+        System.out.println("\tIngresa los datos del paciente\n");
+        System.out.print("NSS: ");
+        int nss = scanner.nextInt();System.out.println();
         NodoAVL nodoPaciente = arbolPrincipal.buscar(nss);
         if(nodoPaciente == null){
             System.out.println("Paciente no encontrado\nVerifique su entrada");
@@ -211,24 +226,41 @@ public class Menu {
         arbolPrincipal.mostrarInorden();
     }
     public void mostrarPostorden(){
-         arbolPrincipal.mostrarPostorden();
+        arbolPrincipal.mostrarPostorden();
     }
     public void exportar(){
-
+        if (arbolPrincipal.raiz == null) {
+            System.out.println("El árbol AVL está vacío. No hay datos para exportar.");
+        } else {
+            System.out.println("Exportando datos del AVL a un archivo...");
+            System.out.println("Ingrese el nombre del archivo: ");
+            String nombreArchivo = scanner.next();
+            arbolPrincipal.exportarAVL(nombreArchivo+".txt");
+        }
     }
     public void eliminar(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Escriba el NSS del paciente que quiere eliminar");
-        int nss = scanner.nextInt();
-        arbolPrincipal.eliminar(arbolPrincipal.raiz,nss);
+        System.out.println("\t\tEliminar Paciente");
+        System.out.println("\tIngresa los datos del paciente\n");
+        System.out.println("NSS: ");
+        int nss = scanner.nextInt();System.out.println();
+        NodoAVL eliminar = arbolPrincipal.eliminar(arbolPrincipal.raiz, nss);
     }
     public void salir(){
-
+        System.out.println("Cerrando el programa. ¡Hasta luego!");
+        try {
+            // Agrega un tiempo de espera de 2 segundos
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            // Maneja la excepción si se interrumpe el hilo durante la espera
+            e.printStackTrace();
+        }
+        System.exit(0);
     }
     public void datosPrueba(){
         if(!seguro) {
-            System.out.println("\tMODO DE PRUEBA");
-            System.out.println("Bienvenido de vuelta!");
+            System.out.println("\tDATOS DE PRUEBA RECUPERADOS");
+            System.out.println("\t\tBienvenido de vuelta!");System.out.println();
+
             Paciente test1 = new Paciente(99092013, "Karla", "Ramírez",
                     "Palacios", 'F', 21);
             test1.agregarCita(LocalDateTime.of(2017, 10, 20, 8, 0),
@@ -282,17 +314,22 @@ public class Menu {
             test5.agregarCita(LocalDateTime.of(2018, 3, 23, 9, 0),
                     "Zarate", 20);
 
+            arbolPrincipal.insertar(test1);
+            arbolPrincipal.insertar(test2);
+            arbolPrincipal.insertar(test3);
+            arbolPrincipal.insertar(test4);
+            arbolPrincipal.insertar(test5);
+
             seguro = true;
         }
     }
-
     public void mostrar(){
 
         int opcion;
         do{
             System.out.println("\tMENU PRINCIPAL");
             System.out.println("""
-                1. Insertar"
+                1. Insertar
                 2. Modificar
                 3. Buscar
                 4. Mostrar en Preorden
@@ -305,7 +342,8 @@ public class Menu {
             opcion = scanner.nextInt();
 
             switch (opcion) {
-                case 1:
+                case 1 -> {
+                    System.out.println("\tSeleccione una opción");
                     System.out.println("a) Insertar Paciente \nb)Insertar Cita");
                     char o = scanner.next().charAt(0);
                     if(o == 'a'){
@@ -313,8 +351,9 @@ public class Menu {
                     }else if(o=='b'){
                         insertarCita();
                     }
-                    break;
-                case 2:
+                }
+                case 2 -> {
+                    System.out.println("\tSeleccione una opción");
                     System.out.println("a) Modificar Paciente \nb)Modificar Cita");
                     char op= scanner.next().charAt(0);
                     if(op == 'a'){
@@ -322,45 +361,35 @@ public class Menu {
                     }else if(op=='b'){
                         modificarCita();
                     }
-                    break;
-                case 3://buscr
-
-                    buscar();
-                    break;
-                case 4:
-                    System.out.println("Mostrando en Preorden");
-                    arbolPrincipal.mostrarPreorden();
-                    break;
-                case 5:
-                    System.out.println("Mostrar en Inorden");
-                    arbolPrincipal.mostrarInorden();
-                    break;
-                case 6:
-                    System.out.println("Mostrar en Postorden");
-                    arbolPrincipal.mostrarPostorden();
-                    break;
-                 case 7: 
-                    
-                if (arbolPrincipal.raiz == null) {
-                    System.out.println("El árbol AVL está vacío. No hay datos para exportar.");
-                } else {
-                    System.out.println("Exportando datos del AVL a un archivo...");
-                    System.out.println("Ingrese el nombre del archivo (.txt): ");
-                    String nombreArchivo = scanner.next();
-                    arbolPrincipal.exportarAVL(nombreArchivo);
                 }
-                    break;
-
-                case 8://eliminar
-                    eliminar();
-
-                    break;
-                case 9://salir
-                    System.out.println("¿Desas exportar los datos antes de salir?");
-                    salir();
-                    break;
-                default:
-                    System.out.println("Opción no válida. Intente de nuevo.");
+                case 3 -> buscar();
+                case 4 -> {
+                    System.out.println("Mostrando en Preorden");
+                    mostrarPreorden();
+                }
+                case 5 -> {
+                    System.out.println("Mostrar en Inorden");
+                    mostrarInorden();
+                }
+                case 6 -> {
+                    System.out.println("Mostrar en Postorden");
+                    mostrarPostorden();
+                }
+                case 7 -> exportar();
+                case 8 -> eliminar();
+                case 9 -> {
+                    System.out.println("¿Desas exportar los datos antes de salir? (s/n)");
+                    char decide = scanner.next().charAt(0);
+                    if(decide == 's'){
+                        exportar();
+                    }else if(decide=='n'){
+                        salir();
+                    }else{
+                        System.out.println("Opción no válida. Intente de nuevo.");
+                    }
+                }
+                case 42 -> datosPrueba();
+                default -> System.out.println("Opción no válida. Intente de nuevo.");
             }
 
         } while (opcion != 8);

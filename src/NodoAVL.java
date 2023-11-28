@@ -1,3 +1,10 @@
+/**
+ *      @author
+ *      Guillermo Sanchez Ortega
+ *      Joe David González Herrera
+ *      Grabiel Ramirez Bañuelos
+ *      Alan Salas Parada
+ */
 public class NodoAVL {
     public Paciente paciente;
     public NodoAVL izquierdo;

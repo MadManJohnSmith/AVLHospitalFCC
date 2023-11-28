@@ -1,3 +1,10 @@
+/**
+ *      @author
+ *      Guillermo Sanchez Ortega
+ *      Joe David González Herrera
+ *      Grabiel Ramirez Bañuelos
+ *      Alan Salas Parada
+ */
 import java.util.Objects;
 
 public class ListaLigada {
@@ -77,7 +84,6 @@ public class ListaLigada {
             }
         }
     }
-    
     public Citas obtenerCitaPorIndice(int indice) {
         NodoLista aux = raiz;
         int contador = 1;
@@ -93,8 +99,8 @@ public class ListaLigada {
 
         return null; // Retorna null si el índice no es válido
     }
-    
-     public void modificarCitaPorIndice(int indice, Citas nuevaCita) {
+
+    public void modificarCitaPorIndice(int indice, Citas nuevaCita) {
         NodoLista aux = raiz;
         int contador = 1;
 
@@ -111,8 +117,8 @@ public class ListaLigada {
         // Si llegamos aquí, el índice no es válido
         System.out.println("Índice de cita no válido. La cita no ha sido modificada.");
     }
-     
-     public int obtenerTamano() {
+
+    public int obtenerTamano() {
         NodoLista aux = raiz;
         int contador = 0;
 

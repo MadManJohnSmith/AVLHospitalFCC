@@ -1,15 +1,21 @@
+/**
+ *      @author
+ *      Guillermo Sanchez Ortega
+ *      Joe David González Herrera
+ *      Grabiel Ramirez Bañuelos
+ *      Alan Salas Parada
+ */
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-
 public class AVL {
     public NodoAVL raiz;
-    
+
     public AVL() {
         this.raiz = null;
     }
-    
-    
+
+    //Casi no se nota que salio del ChatGPT xD
     // Método para obtener la altura de un nodo
     public int altura(NodoAVL nodo) {
         if (nodo == null) {
@@ -104,51 +110,45 @@ public class AVL {
 
         return nodo;
     }
-    
+
     public NodoAVL eliminar(NodoAVL nodo, int nss){
         if (nodo == null) {
-        System.out.println("Elemento no encontrado");
+            System.out.println("Elemento no encontrado");
+            return null;
+        }
+
+        // Buscar el nodo que contiene el dato
+        if (nss < nodo.paciente.NSS) {
+            nodo.izquierdo = eliminar(nodo.izquierdo, nss);
+        } else if (nss > nodo.paciente.NSS) {
+            nodo.derecho = eliminar(nodo.derecho, nss);
+        } else {
+            // Casos para eliminar el nodo
+            if (nodo.izquierdo == null) {
+                NodoAVL temp = nodo.derecho;
+                System.out.print("Elemento eliminado: " + nodo.paciente.NSS + " reemplazado por ");
+                if (temp != null) {
+                    System.out.println(temp.paciente.NSS);
+                } else {
+                    System.out.println("NULL");
+                }
+                return temp;
+            } else if (nodo.derecho == null) {
+                NodoAVL temp = nodo.izquierdo;
+                System.out.print("Elemento eliminado: " + nodo.paciente.NSS + " reemplazado por ");
+                System.out.println(temp.paciente.NSS);
+                return temp;
+            } else {
+                // Caso con dos hijos: encontrar el sucesor inmediato
+                NodoAVL temp = encontrarMinimo(nodo.derecho);
+                System.out.println("* Elemento eliminado: " + nodo.paciente.NSS + " reemplazado por " + temp.paciente.NSS);
+                nodo.paciente.NSS = temp.paciente.NSS;
+                nodo.derecho = eliminar(nodo.derecho, nss);
+            }
+        }
         return nodo;
     }
 
-    // Buscar el nodo que contiene el dato
-    if (nss < nodo.paciente.NSS) {
-        nodo.izquierdo = eliminar(nodo.izquierdo, nss);
-    } else if (nss > nodo.paciente.NSS) {
-        nodo.derecho = eliminar(nodo.derecho, nss);
-    } else {
-        // Casos para eliminar el nodo
-        if (nodo.izquierdo == null) {
-            NodoAVL temp = nodo.derecho;
-            System.out.print("Elemento eliminado: " + nodo.paciente.NSS + " reemplazado por ");
-            if (temp != null) {
-                System.out.println(temp.paciente.NSS);
-            } else {
-                System.out.println("NULL");
-            }
-            nodo = null;
-            return temp;
-        } else if (nodo.derecho == null) {
-            NodoAVL temp = nodo.izquierdo;
-            System.out.print("Elemento eliminado: " + nodo.paciente.NSS + " reemplazado por ");
-            if (temp != null) {
-                System.out.println(temp.paciente.NSS);
-            } else {
-                System.out.println("NULL");
-            }
-            nodo = null;
-            return temp;
-        } else {
-            // Caso con dos hijos: encontrar el sucesor inmediato
-            NodoAVL temp = encontrarMinimo(nodo.derecho);
-            System.out.println("* Elemento eliminado: " + nodo.paciente.NSS + " reemplazado por " + temp.paciente.NSS);
-            nodo.paciente.NSS = temp.paciente.NSS;
-            nodo.derecho = eliminar(nodo.derecho, nss);
-        }
-    }
-    return nodo;
-    }
-    
     public NodoAVL encontrarMinimo(NodoAVL nodo){
         while (nodo.izquierdo != null) {
             nodo = nodo.izquierdo;
@@ -173,7 +173,7 @@ public class AVL {
             return buscarRec(nodo.derecho, nss);
         }
     }
-    
+
     public void mostrarInorden(NodoAVL nodo){
         if (nodo != null) {
             mostrarInorden(nodo.izquierdo);
@@ -181,45 +181,44 @@ public class AVL {
             mostrarInorden(nodo.derecho);
         }
     }
-    
+
     public void mostrarInorden(){
         mostrarInorden(raiz);
-         System.out.println("\n");
-    }
-    
-     public void mostrarPreorden(NodoAVL nodo){
-         if (nodo != null) {
-        nodo.paciente.mostrar(); 
-        mostrarPreorden(nodo.izquierdo); 
-        mostrarPreorden(nodo.derecho);  
-    }
-     }
-     
-    public void mostrarPreorden(){
-        mostrarPreorden(raiz); 
         System.out.println("\n");
     }
-    
+
+    public void mostrarPreorden(NodoAVL nodo){
+        if (nodo != null) {
+            nodo.paciente.mostrar();
+            mostrarPreorden(nodo.izquierdo);
+            mostrarPreorden(nodo.derecho);
+        }
+    }
+
+    public void mostrarPreorden(){
+        mostrarPreorden(raiz);
+        System.out.println("\n");
+    }
+
     public void mostrarPostorden(NodoAVL nodo){
         if (nodo != null) {
-        mostrarPostorden(nodo.izquierdo); 
-        mostrarPostorden(nodo.derecho); 
-        nodo.paciente.mostrar();
+            mostrarPostorden(nodo.izquierdo);
+            mostrarPostorden(nodo.derecho);
+            nodo.paciente.mostrar();
+        }
     }
-    }
-    
+
     public void mostrarPostorden(){
-         mostrarPostorden(raiz);
-         System.out.println("\n");
+        mostrarPostorden(raiz);
+        System.out.println("\n");
     }
-    
-    
+
+
     // Método público para insertar un paciente en el árbol AVL
     public void insertar(Paciente paciente) {
         raiz = insertar(raiz, paciente);
     }
-
-        public void exportarAVL(String nombreArchivo) {
+    public void exportarAVL(String nombreArchivo) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(nombreArchivo))) {
             exportarInorden(raiz, writer);
             System.out.println("Datos del AVL exportados correctamente en " + nombreArchivo);
@@ -229,14 +228,15 @@ public class AVL {
     }
 
     private void exportarInorden(NodoAVL nodo, PrintWriter writer) {
-    if (nodo != null) {
-        exportarInorden(nodo.izquierdo, writer);
-        // Aquí puedes personalizar cómo se escriben los datos en el archivo
-        System.out.println("Exportando: " + nodo.paciente.toString()); // Mensaje de depuración
-        writer.println(nodo.paciente.toString());
-        exportarInorden(nodo.derecho, writer);
+        if (nodo != null) {
+            exportarInorden(nodo.izquierdo, writer);
+            // Aquí puedes personalizar cómo se escriben los datos en el archivo
+            System.out.println("Exportando: " + nodo.paciente.toString()); // Mensaje de depuración
+            writer.println(nodo.paciente.toString());
+            exportarInorden(nodo.derecho, writer);
+        }
     }
-}
+
 
 
 }

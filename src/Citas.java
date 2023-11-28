@@ -1,3 +1,11 @@
+
+/*
+ *      @author
+ *      Guillermo Sanchez Ortega
+ *      Joe David González Herrera
+ *      Grabiel Ramirez Bañuelos
+ *      Alan Salas Parada
+ */
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 public class Citas {
@@ -9,8 +17,8 @@ public class Citas {
         this.nombreMedico = nombreMedico;
         this.consultorio = consultorio;
     }
-    
-      public void mostrarCita() {
+
+    public void mostrarCita() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String fechaFormateada = fecha.format(formatter);
 
