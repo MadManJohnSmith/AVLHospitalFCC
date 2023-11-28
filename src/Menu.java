@@ -1,5 +1,6 @@
 import java.time.LocalDateTime;
 import java.util.Scanner;
+import java.time.format.DateTimeFormatter;
 
 public class Menu {
     boolean seguro=false;
@@ -32,10 +33,11 @@ public class Menu {
         System.out.println("NSS: ");
         int nss = scanner.nextInt();
         Paciente paciente = obtenerPaciente(nss);
+      
         if(paciente==null){
             return;
         }
-        System.out.println("Elige la cita que quieres modificar");
+        System.out.println("Citas");
         paciente.citas.mostrarLista();
 
         System.out.println("Año(AAAA): ");
@@ -46,12 +48,26 @@ public class Menu {
         String di = scanner.next();
         System.out.println("Hora(HHmm): ");
         String ho = scanner.next();
-        LocalDateTime fecha = LocalDateTime.parse(an+me+di+ho);
+        System.out.println("Minuto ");
+        String mi = scanner.next();
+        
+         // Concatenar las partes de la fecha y hora con un separador
+        String fechaHoraTexto = an + "-" + me + "-" + di + "T" + ho + ":" + mi;
+
+        // Utilizar un formateador de fecha y hora
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        LocalDateTime fecha = LocalDateTime.parse(fechaHoraTexto, formatter);
+        
+        // Concatenar las partes de la fecha y hora con un separador
         System.out.println("Nombre del médico: ");
         String nombreMedico = scanner.next();
         System.out.println("Consultorio: ");
         int consultorio = scanner.nextInt();
-
+        
+        Citas nuevaCita = new Citas(fecha, nombreMedico, consultorio);
+        paciente.agregarCita(nuevaCita);
+        
+       
     }
     public void modificarPaciente(){
         System.out.println("\t\tModificar Datos");
@@ -105,17 +121,67 @@ public class Menu {
         System.out.println("Datos del paciente modificados con éxito");
     }
     public void modificarCita(){
-        System.out.println("\t\tModificar Cita");
-        System.out.println("\tIngresa los datos del paciente\n");
+       System.out.println("\t\tModificar Cita");
+       System.out.println("\tIngresa los datos del paciente\n");
 
-        System.out.println("NSS: ");
-        int nss = scanner.nextInt();
-        Paciente paciente = obtenerPaciente(nss);
-        if(paciente==null){
-            return;
-        }
+    System.out.println("NSS: ");
+    int nss = scanner.nextInt();
+    Paciente paciente = obtenerPaciente(nss);
+    if (paciente == null) {
+        return;
+    }
 
+    System.out.println("Elige la cita que quieres modificar");
+    paciente.citas.mostrarLista();
 
+    System.out.println("Ingrese el índice de la cita que desea modificar: ");
+    int indiceCitaModificar = scanner.nextInt();
+
+    if (indiceCitaModificar < 1 || indiceCitaModificar > paciente.citas.obtenerTamano()) {
+        System.out.println("Índice de cita no válido. Operación cancelada.");
+        return;
+    }
+
+    // Obtener la cita seleccionada
+    Citas citaSeleccionada = paciente.citas.obtenerCitaPorIndice(indiceCitaModificar);
+
+    // Mostrar detalles de la cita seleccionada
+    System.out.println("Detalles de la cita seleccionada:");
+    citaSeleccionada.mostrarCita();
+
+    // Pedir al usuario que ingrese los nuevos datos
+    System.out.println("Ingrese los nuevos datos para la cita:");
+
+    System.out.println("Año(AAAA): ");
+    String an = scanner.next();
+    System.out.println("Mes(MM): ");
+    String me = scanner.next();
+    System.out.println("Dia(DD): ");
+    String di = scanner.next();
+    System.out.println("Hora(HH): ");
+    String ho = scanner.next();
+    System.out.println("Minuto(MM): ");
+    String mi = scanner.next();
+
+    // Concatenar las partes de la fecha y hora con un separador
+    String fechaHoraTexto = an + "-" + me + "-" + di + "T" + ho + ":" + mi;
+
+    // Utilizar un formateador de fecha y hora
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+    LocalDateTime nuevaFecha = LocalDateTime.parse(fechaHoraTexto, formatter);
+
+    System.out.println("Nombre del médico: ");
+    String nuevoNombreMedico = scanner.next();
+    System.out.println("Consultorio: ");
+    int nuevoConsultorio = scanner.nextInt();
+
+    // Crear una nueva cita con los datos actualizados
+    Citas nuevaCita = new Citas(nuevaFecha, nuevoNombreMedico, nuevoConsultorio);
+
+    // Modificar la cita en la lista
+    paciente.citas.modificarCitaPorIndice(indiceCitaModificar, nuevaCita);
+
+    System.out.println("Cita modificada con éxito.");
     }
     public void buscar(){
         Scanner scanner = new Scanner(System.in);
