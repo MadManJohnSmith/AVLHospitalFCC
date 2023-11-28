@@ -45,4 +45,13 @@ public class Paciente {
         citas.insertarOrdenado(cita);
         System.out.println("Cita agregada con éxito.");
     }
+    @Override
+public String toString() {
+    return "NSS: " + NSS + "\n" +
+           "Nombre: " + nombres + "\n" +
+           "Apellido Paterno: " + apellidoPaterno + "\n" +
+           "Apellido Materno: " + apellidoMaterno + "\n" +
+           "Sexo: " + sexo + "\n" +
+           "Edad: " + edad;
+}
 }
