@@ -112,6 +112,7 @@ public class Menu {
                 System.out.println("Edad: ");
                 paciente.edad = scanner.nextInt();
                 break;
+                
             case 0:
                 return;
             default:
@@ -338,17 +339,24 @@ public class Menu {
                     System.out.println("Mostrar en Postorden");
                     arbolPrincipal.mostrarPostorden();
                     break;
-                case 7://exportar
-
+                 case 7: 
+                    
+                if (arbolPrincipal.raiz == null) {
+                    System.out.println("El árbol AVL está vacío. No hay datos para exportar.");
+                } else {
+                    System.out.println("Exportando datos del AVL a un archivo...");
+                    System.out.println("Ingrese el nombre del archivo (.txt): ");
+                    String nombreArchivo = scanner.next();
+                    arbolPrincipal.exportarAVL(nombreArchivo);
+                }
                     break;
+
                 case 8://eliminar
+                    eliminar();
 
                     break;
                 case 9://salir
                     System.out.println("¿Desas exportar los datos antes de salir?");
-
-
-
                     salir();
                     break;
                 default:
